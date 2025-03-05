@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 export default function StepIngredientItem() {
     return (
         <View style={styles.ingredientItem}>
-            <Image style={styles.image} source={require('../assets/ingredientImages/butter.png')} />
+            <Image style={styles.image} source={require('../assets/ingredientImages/milkproducts/butter.png')} />
             <Text style={styles.textBody}> 2EL Butter </Text>
         </View>
     );

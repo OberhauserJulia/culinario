@@ -1,19 +1,25 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { HomeStackParamList } from '../components/navigation/StackNavigator';
+
+type RecipeItemNavigationProp = StackNavigationProp<HomeStackParamList, 'Recipe'>;
 
 export default function RecipeItem() {
+  const navigation = useNavigation<RecipeItemNavigationProp>();
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Recipe', { recipeId: '1' })}>
       <Image
         style={styles.image}
         source={require('../assets/recipeImages/marry-me-gnocchi.jpg')}
       />
       <View style={styles.textContainer}>
         <Text style={styles.text}>
-          Karotten-Walnuss-Kuchen mit Karamell-Frischkäse-Glasur
+          Marry Me Gnocchi
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

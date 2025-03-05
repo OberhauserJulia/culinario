@@ -1,6 +1,8 @@
+import React from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useFonts } from "expo-font";
+import TabNavigator from "./components/navigation/TabNavigator";
 import "./global.css"
 
 import AddRecipeScreen from "./screens/AddRecipeScreen";
@@ -13,11 +15,11 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return null; // oder ein Lade-Screen
+    return null;
   }
 
   return (
-    <AddRecipeScreen />
+    <TabNavigator />
   );
 }
 

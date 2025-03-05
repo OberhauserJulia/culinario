@@ -1,39 +1,44 @@
 import { StatusBar } from 'expo-status-bar';
+import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { TextInput } from 'react-native-paper';
 
 // Imports Compponents
 import SmallButton from '../components/SmallButton';
 import BigButton from '../components/BigButton';
-import InputField from '../components/InputField';
 import InputFieldSteps from '../components/InputFieldSteps';
 import IngredientSelect from '../components/IngredientSelect';
 
 export default function CookingModeScreen() {
+    const [text, setText] = React.useState("");
+
     return (
         <View style={styles.container}>
 
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <StatusBar style="light" />
 
-                {/* Top Bar */}
-                <View style={styles.topBar}>
-                    <SmallButton back={true} />
-                    <Text style={styles.textH1}> Rezept hinzufügen </Text>
-                </View>
+                <Text style={styles.textH1}> Rezept hinzufügen </Text>
 
 
                 <View style={styles.inputContainer}>
                     <Text style={styles.textH2}> Rezeptname </Text>
-                    <InputField placeholder="Zubereitungsschritt beschreiben" />
+                    <TextInput
+                    placeholder='Rezeptname eingeben'
+                    underlineColor="transparent"
+                    activeUnderlineColor="transparent"
+                    textColor="#FFFFFF"
+                    style={{backgroundColor: '#222222', color: '#FFFFFF', borderTopLeftRadius: 15, borderTopRightRadius: 15, borderBottomRightRadius: 15, borderBottomLeftRadius: 15 }}
+                    />
 
                     {/* Zutaten */}
                     <View style={styles.topBarInput}>
-                      <Text style={styles.textH2}> Zutaten </Text>
-                      <SmallButton plus={true} />
+                        <Text style={styles.textH2}> Zutaten </Text>
+                        <SmallButton plus={true} />
                     </View>
 
                     <IngredientSelect />
-                    
+
                     {/* Zubereitungsschritte */}
                     {/* <View style={styles.topBarInput}>
                       <Text style={styles.textH2}> Zubereitungsschritte </Text>
@@ -45,7 +50,7 @@ export default function CookingModeScreen() {
 
             </ScrollView>
 
-            
+
 
             {/* Fixed Big Button */}
             <View style={styles.fixedButtonContainer}>
@@ -79,14 +84,14 @@ const styles = StyleSheet.create({
     },
 
     topBarInput: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-  },
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
 
     inputContainer: {
-      flexDirection: 'column',
-      gap: 24,
+        flexDirection: 'column',
+        gap: 24,
     },
 
     fixedButtonContainer: {
@@ -110,11 +115,11 @@ const styles = StyleSheet.create({
     },
 
     textH2: {
-      color: '#66A182',
-      fontFamily: 'Montserrat',
-      fontSize: 18,
-      fontWeight: 'bold',
-  },
+        color: '#66A182',
+        fontFamily: 'Montserrat',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
 
     textBody: {
         color: '#FFFFFF',
