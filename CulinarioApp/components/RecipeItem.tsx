@@ -8,8 +8,10 @@ type RecipeItemNavigationProp = StackNavigationProp<HomeStackParamList, 'Recipe'
 
 export default function RecipeItem() {
   const navigation = useNavigation<RecipeItemNavigationProp>();
+  const navigation = useNavigation<RecipeItemNavigationProp>();
 
   return (
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Recipe', { recipeId: '1' })}>
     <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Recipe', { recipeId: '1' })}>
       <Image
         style={styles.image}
@@ -18,8 +20,10 @@ export default function RecipeItem() {
       <View style={styles.textContainer}>
         <Text style={styles.text}>
           Marry Me Gnocchi
+          Marry Me Gnocchi
         </Text>
       </View>
+    </TouchableOpacity>
     </TouchableOpacity>
   );
 }

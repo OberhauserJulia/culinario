@@ -80,6 +80,8 @@ export default function CookingModeScreen() {
                     <View style={styles.topBarInput}>
                         <Text style={styles.textH2}> Zutaten </Text>
                         <SmallButton plus={true} />
+                        <Text style={styles.textH2}> Zutaten </Text>
+                        <SmallButton plus={true} />
                     </View>
 
                     <View className="flex flex-row items-center w-full">
@@ -107,6 +109,7 @@ export default function CookingModeScreen() {
                 </View>
 
             </ScrollView>
+
 
 
 
@@ -146,8 +149,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
 
     inputContainer: {
+        flexDirection: 'column',
+        gap: 24,
         flexDirection: 'column',
         gap: 24,
     },
@@ -173,6 +182,11 @@ const styles = StyleSheet.create({
     },
 
     textH2: {
+        color: '#66A182',
+        fontFamily: 'Montserrat',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
         color: '#66A182',
         fontFamily: 'Montserrat',
         fontSize: 18,
