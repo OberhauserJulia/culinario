@@ -1,51 +1,114 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import * as React from 'react';
+import { useState } from 'react';
+import * as ImagePicker from 'expo-image-picker';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Button, Image } from 'react-native';
+import { TextInput } from 'react-native-paper';
+import { ImagePlus } from 'lucide-react-native';
+import { ingredients } from '../data/ingredients';
 
 // Imports Compponents
 import SmallButton from '../components/SmallButton';
 import BigButton from '../components/BigButton';
-import InputField from '../components/InputField';
 import InputFieldSteps from '../components/InputFieldSteps';
 import IngredientSelect from '../components/IngredientSelect';
 
 export default function CookingModeScreen() {
+    const [text, setText] = React.useState("");
+
+    const [image, setImage] = useState<string | null>(null);
+
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            aspect: [16, 9],
+            quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+        }
+    };
+
+    const formattedIngredients = ingredients.map((i) => ({
+        value: i.name,
+        label: (
+            <View className="flex-row gap-3 items-center h-full p-0">
+                <View className="w-[33.5px] h-[33.5px] bg-darkbackground rounded-[5px] flex items-center justify-center">
+                    <Image source={typeof i.image === 'string' ? { uri: i.image } : i.image} className="w-[27.5] h-[27.5]" />
+                </View>
+                <Text className="text-white font-robotoMedium leading-[25px]">{i.name}</Text>
+            </View>
+        ),
+    }));
+
     return (
+
         <View style={styles.container}>
 
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <StatusBar style="light" />
 
-                {/* Top Bar */}
-                <View style={styles.topBar}>
-                    <SmallButton back={true} />
-                    <Text style={styles.textH1}> Rezept hinzufügen </Text>
-                </View>
+                <Text style={styles.textH1}> Rezept hinzufügen </Text>
 
 
                 <View style={styles.inputContainer}>
+                    <TouchableOpacity
+                        onPress={pickImage}
+                        className="flex flex-col gap-3 h-[149px] w-full bg-lightbackground border border-primary border-dashed rounded-[15px] items-center justify-center">
+                        {image ? (
+                            <Image source={{ uri: image }} style={{ resizeMode: 'contain' }} className="w-full h-full" />
+                        ) : (<>
+                            <ImagePlus size={50} color="#66A182" />
+                            <Text className="text-primary font-robotoMedium">Foto hinzufügen</Text>
+                        </>)}
+                    </TouchableOpacity>
+
                     <Text style={styles.textH2}> Rezeptname </Text>
-                    <InputField placeholder="Zubereitungsschritt beschreiben" />
+                    <TextInput
+                        placeholder='Rezeptname eingeben'
+                        underlineColor="transparent"
+                        activeUnderlineColor="transparent"
+                        textColor="#FFFFFF"
+                        style={{ backgroundColor: '#222222', color: '#FFFFFF', borderTopLeftRadius: 15, borderTopRightRadius: 15, borderBottomRightRadius: 15, borderBottomLeftRadius: 15 }}
+                    />
 
                     {/* Zutaten */}
                     <View style={styles.topBarInput}>
-                      <Text style={styles.textH2}> Zutaten </Text>
-                      <SmallButton plus={true} />
+                        <Text style={styles.textH2}> Zutaten </Text>
+                        <SmallButton plus={true} />
                     </View>
 
-                    <IngredientSelect />
-                    
+                    <View className="flex flex-row items-center w-full">
+                        <TextInput
+                            placeholder='Menge'
+                            underlineColor="transparent"
+                            activeUnderlineColor="transparent"
+                            textColor="#FFFFFF"
+                            style={{ backgroundColor: '#222222', color: '#FFFFFF', borderTopLeftRadius: 15, borderTopRightRadius: 15, borderBottomRightRadius: 15, borderBottomLeftRadius: 15 }}/>
+                        <View className ="bg-primary w-[1px] h-[28px]"/>
+                        <IngredientSelect
+                            data={formattedIngredients}
+                            onChange={console.log}
+                            placeholder="Select ingredient" />
+                    </View>
+
+
                     {/* Zubereitungsschritte */}
-                    {/* <View style={styles.topBarInput}>
+                    <View style={styles.topBarInput}>
                       <Text style={styles.textH2}> Zubereitungsschritte </Text>
                       <SmallButton plus={true} />
                     </View>
 
-                    <InputFieldSteps placeholder="Zubereitungsschritt beschreiben" /> */}
+                    <InputFieldSteps placeholder="Zubereitungsschritt beschreiben" />
                 </View>
 
             </ScrollView>
 
-            
+
 
             {/* Fixed Big Button */}
             <View style={styles.fixedButtonContainer}>
@@ -79,14 +142,14 @@ const styles = StyleSheet.create({
     },
 
     topBarInput: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-  },
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
 
     inputContainer: {
-      flexDirection: 'column',
-      gap: 24,
+        flexDirection: 'column',
+        gap: 24,
     },
 
     fixedButtonContainer: {
@@ -110,11 +173,11 @@ const styles = StyleSheet.create({
     },
 
     textH2: {
-      color: '#66A182',
-      fontFamily: 'Montserrat',
-      fontSize: 18,
-      fontWeight: 'bold',
-  },
+        color: '#66A182',
+        fontFamily: 'Montserrat',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
 
     textBody: {
         color: '#FFFFFF',

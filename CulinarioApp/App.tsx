@@ -1,6 +1,10 @@
+import React from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useFonts } from "expo-font";
+//import TabNavigator from "./components/navigation/TabNavigator";
+import TabNavigator from "./components/navigation/CombinedNavigator";
+import { NavigationContainer } from "@react-navigation/native";
 import "./global.css"
 
 import AddRecipeScreen from "./screens/AddRecipeScreen";
@@ -13,22 +17,15 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return null; // oder ein Lade-Screen
+    return null;
   }
 
   return (
-    <AddRecipeScreen />
+    <NavigationContainer>
+      <TabNavigator />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 // import React from 'react';
 // import { initializeApp } from "firebase/app";

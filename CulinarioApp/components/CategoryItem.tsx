@@ -1,31 +1,21 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function CategoryItem() {
+type CategoryItemProps = {
+  category: string;
+  isSelected: boolean;
+  onPress: () => void;
+};
 
-    return (
-        <View style={styles.container}>
-            <Image source={require('../assets/categorycons/vorspeise.png')} />
-            <Text style={styles.text}>Vorspeise</Text>
-        </View>
-    );
+export default function CategoryItem({ category, isSelected, onPress }: CategoryItemProps) {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View
+        className={`flex-row p-[6] pr-[12] rounded-[15] border-primary border gap-3 self-start ${isSelected ? 'bg-primary' : 'bg-darkbackground'}`}
+      >
+        <Image source={require('../assets/categorycons/vorspeise.png')} />
+        <Text className="text-white font-robotoMedium text-base">{category}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        padding: 6,
-        borderRadius: 15,
-        borderWidth: 1,
-        borderColor: '#66A182',
-        gap: 12,
-        alignSelf: 'flex-start',
-    },
-
-    text: {
-        color: '#FFFFFF',
-        fontFamily: 'Inter',
-        fontSize: 16,
-        fontWeight: 'medium',
-    },
-});

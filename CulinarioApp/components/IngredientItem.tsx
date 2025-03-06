@@ -7,7 +7,7 @@ export default function IngredientItem() {
 
         <View style={styles.ingedientContainer}>
             <View style={styles.imageContainer}>
-                <Image style={styles.image} source={require('../assets/ingredientImages/butter.png')} />
+                <Image style={styles.image} source={require('../assets/ingredientImages/milkproducts/butter.png')} />
             </View>
             <Text style={styles.textBody}> Butter </Text>
         </View>

@@ -1,23 +1,36 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { Settings, ArrowLeft, ShoppingCart, EllipsisVertical, Plus } from 'lucide-react-native';
 
 interface SmallButtonProps {
-  filter?: boolean;
+  settings?: boolean;
   dots?: boolean;
   back?: boolean;
   plus?: boolean;
   shoppingCart?: boolean;
 }
 
-export default function SmallButton({ filter, dots, back, plus, shoppingCart }: SmallButtonProps) {
+export default function SmallButton({ settings, dots, back, plus, shoppingCart }: SmallButtonProps) {
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    if (back) {
+      navigation.goBack();
+    }
+    if (settings) {
+      navigation.navigate('Settings');
+    }
+  };
+
   return (
-    <View style={[styles.button, filter && styles.filterButton]}>
-        {filter && <Image style={styles.image} source={require('../assets/icons/filter.png')} />}
-        {dots && <Image style={styles.image} source={require('../assets/icons/vertical-dots.png')} />}
-        {back && <Image style={styles.image} source={require('../assets/icons/back.png')} />}
-        {plus && <Image style={styles.image} source={require('../assets/icons/plus.png')} />}
-        {shoppingCart && <Image style={styles.image} source={require('../assets/icons/shoppingCart.png')} />}
-    </View>
+    <TouchableOpacity onPress={handlePress} style={[styles.button, settings && styles.settingsButton]}>
+        {settings && <Settings size={'100%'} color="white"/>}
+        {dots && <EllipsisVertical size={'100%'} color="white"/>}
+        {back && <ArrowLeft size={'100%'} color="white"/>}
+        {plus && <Plus size={'100%'} color="white"/>}
+        {shoppingCart && <ShoppingCart size={'100%'} color="white"/>}
+    </TouchableOpacity>
   );
 }
  
@@ -25,20 +38,17 @@ const styles = StyleSheet.create({
 
   button: {
     backgroundColor: '#22222280',
-    height: 49,
-    width: 49,
+    height: 60,
+    width: 60,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
     padding: 12,
   },
 
-  filterButton: {
+  settingsButton: {
     backgroundColor: '#66A182',
-  },
-
-  image: {
-    width: '100%',
-    height: '100%',
+    height: 49,
+    width: 49,
   },
 });

@@ -11,13 +11,13 @@ interface InputFieldProps {
 export default function InputFieldSteps({ numberOfSteps, placeholder, inputValue, onChangeText }: InputFieldProps) {
 
   return (
-    <View style={styles.container}>
-      <View style={styles.stepNumber}>
-        <Text style={styles.textH1}>1</Text>
+    <View className="flex-1 flex-row gap-6">
+      <View className="bg-primary w-[40px] h-[40px] p-[6px] text-center font-robotoMedium items-center justify-center rounded-[5px]">
+        <Text className="text-[16px] font-robotoMedium leading-[25px] text-white text-center">1</Text>
       </View>
 
       <TextInput
-        style={styles.input}
+        className="h-[49px] w-full bg-lightbackground border-[1px] rounded-[15px] px-[10px]"
         placeholder={placeholder}
         placeholderTextColor="#FFFFFF80"
         value={inputValue}
@@ -26,45 +26,3 @@ export default function InputFieldSteps({ numberOfSteps, placeholder, inputValue
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 24,
-  },
-
-  stepNumber: {
-    backgroundColor: '#66A182',
-    padding: 6,
-    alignContent: 'center',
-    justifyContent: 'center',
-    borderRadius: 5,
-    alignSelf: 'flex-start',
-},
-
-  input: {
-    height: 49,
-    width: '100%',
-    borderColor: '#66A182',
-    backgroundColor: '#222222',
-    borderWidth: 1,
-    borderRadius: 15,
-    paddingHorizontal: 10,
-  },
-
-  textH1: {
-    color: '#FFFFFF',
-    fontFamily: 'Montserrat',
-    fontSize: 24,
-    fontWeight: 'bold',
-},
-
-textBody: {
-    color: '#FFFFFF',
-    fontFamily: 'Inter',
-    fontSize: 16,
-    fontWeight: 'medium',
-    lineHeight: 25,
-},
-});
