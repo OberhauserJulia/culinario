@@ -1,7 +1,7 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';  // ReactNode importieren
-import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { db } from '../App';  // oder importiere db von wo es initialisiert wird
-import defaultIngredients from '../data/ingredients.json';
+import React, { createContext, useState, useEffect, ReactNode } from "react";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { db } from "../firebase.config";
+import { ingredients } from "../data/ingredients";
 
 export type IngredientType = {
   id: string;
@@ -11,10 +11,9 @@ export type IngredientType = {
 
 type IngredientContextType = {
   ingredients: IngredientType[];
-  addIngredient: (ingredient: Omit<IngredientType, 'id'>) => void;
+  addIngredient: (ingredient: Omit<IngredientType, "id">) => void;
 };
 
-// Typisierung der Props mit ReactNode
 export const IngredientContext = createContext<IngredientContextType>({
   ingredients: [],
   addIngredient: () => {},
@@ -29,24 +28,29 @@ export const IngredientProvider: React.FC<IngredientProviderProps> = ({ children
 
   useEffect(() => {
     const fetchIngredients = async () => {
-      const querySnapshot = await getDocs(collection(db, 'ingredients'));
-      const firebaseIngredients = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as IngredientType[];
+      try {
+        const querySnapshot = await getDocs(collection(db, "ingredients"));
+        const firebaseIngredients = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as IngredientType[];
 
-      setIngredients([
-        ...defaultIngredients.map(ingredient => ({ ...ingredient, id: ingredient.id.toString() })),
-        ...firebaseIngredients
-      ]);
+        setIngredients([...ingredients, ...firebaseIngredients]);
+      } catch (error) {
+        console.error("Fehler beim Laden der Zutaten:", error);
+      }
     };
 
     fetchIngredients();
   }, []);
 
-  const addIngredient = async (ingredient: Omit<IngredientType, 'id'>) => {
-    const docRef = await addDoc(collection(db, 'ingredients'), ingredient);
-    setIngredients((prev) => [...prev, { id: docRef.id, ...ingredient }]);
+  const addIngredient = async (ingredient: Omit<IngredientType, "id">) => {
+    try {
+      const docRef = await addDoc(collection(db, "ingredients"), ingredient);
+      setIngredients((prev) => [...prev, { id: docRef.id, ...ingredient }]);
+    } catch (error) {
+      console.error("Fehler beim Hinzufügen einer Zutat:", error);
+    }
   };
 
   return (

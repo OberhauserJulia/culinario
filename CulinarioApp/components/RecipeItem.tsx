@@ -8,7 +8,6 @@ type RecipeItemNavigationProp = StackNavigationProp<HomeStackParamList, 'Recipe'
 
 export default function RecipeItem() {
   const navigation = useNavigation<RecipeItemNavigationProp>();
-  const navigation = useNavigation<RecipeItemNavigationProp>();
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Recipe', { recipeId: '1' })}>

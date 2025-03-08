@@ -15,8 +15,9 @@ import IngredientSelect from '../components/IngredientSelect';
 
 export default function CookingModeScreen() {
     const [text, setText] = React.useState("");
-
     const [image, setImage] = useState<string | null>(null);
+    const [steps, setSteps] = useState<{ text: string, stepNumber: number }[]>([{ text: "", stepNumber: 1 }]);
+    const [ingredientsList, setIngredientsList] = useState<{ amount: string, ingredient: string }[]>([{ amount: "", ingredient: "" }]);
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -45,15 +46,26 @@ export default function CookingModeScreen() {
         ),
     }));
 
+    const addStep = () => {
+        setSteps([...steps, { text: "", stepNumber: steps.length + 1 }]);
+    };
+
+    const addIngredient = () => {
+        setIngredientsList([...ingredientsList, { amount: "", ingredient: "" }]);
+    };
+
     return (
 
         <View style={styles.container}>
 
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <StatusBar style="light" />
-
+            <StatusBar style="light" />
+            {/* Top Bar */}
+            <View className="flex-row justify-between items-center pb-6">
                 <Text style={styles.textH1}> Rezept hinzufügen </Text>
+                <SmallButton save={true} />
+            </View>
 
+            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
 
                 <View style={styles.inputContainer}>
                     <TouchableOpacity
@@ -73,50 +85,68 @@ export default function CookingModeScreen() {
                         underlineColor="transparent"
                         activeUnderlineColor="transparent"
                         textColor="#FFFFFF"
-                        style={{ backgroundColor: '#222222', color: '#FFFFFF', borderTopLeftRadius: 15, borderTopRightRadius: 15, borderBottomRightRadius: 15, borderBottomLeftRadius: 15 }}
+                        placeholderTextColor="#FFFFFF80"
+                        style={{
+                            backgroundColor: '#222222',
+                            color: '#FFFFFF',
+                            borderTopLeftRadius: 15,
+                            borderTopRightRadius: 15,
+                            borderBottomRightRadius: 15,
+                            borderBottomLeftRadius: 15,
+                            fontFamily: 'Roboto-Medium',
+                            fontSize: 16,
+                            lineHeight: 25
+                        }}
                     />
 
                     {/* Zutaten */}
                     <View style={styles.topBarInput}>
                         <Text style={styles.textH2}> Zutaten </Text>
-                        <SmallButton plus={true} />
-                        <Text style={styles.textH2}> Zutaten </Text>
-                        <SmallButton plus={true} />
+                        <SmallButton plus={true} onPress={addIngredient} />
                     </View>
+                    
+                    {/* Zutatenliste */}
+                    {ingredientsList.map((ingredient, index) => (
+                        <View key={index} className="flex-1 flex-row items-center w-full">
+                            <TextInput
+                                placeholder='Menge'
+                                underlineColor="transparent"
+                                activeUnderlineColor="transparent"
+                                textColor="#FFFFFF"
+                                placeholderTextColor="#FFFFFF80"
+                                style={{
+                                    backgroundColor: '#222222',
+                                    color: '#FFFFFF',
+                                    borderTopLeftRadius: 15,
+                                    borderTopRightRadius: 15,
+                                    borderBottomRightRadius: 15,
+                                    borderBottomLeftRadius: 15,
+                                    fontFamily: 'Roboto-Medium',
+                                    fontSize: 16,
+                                    lineHeight: 25,
+                                }} />
+                            <View className="bg-primary w-[1px] h-[28px]" />
 
-                    <View className="flex flex-row items-center w-full">
-                        <TextInput
-                            placeholder='Menge'
-                            underlineColor="transparent"
-                            activeUnderlineColor="transparent"
-                            textColor="#FFFFFF"
-                            style={{ backgroundColor: '#222222', color: '#FFFFFF', borderTopLeftRadius: 15, borderTopRightRadius: 15, borderBottomRightRadius: 15, borderBottomLeftRadius: 15 }}/>
-                        <View className ="bg-primary w-[1px] h-[28px]"/>
-                        <IngredientSelect
-                            data={formattedIngredients}
-                            onChange={console.log}
-                            placeholder="Select ingredient" />
-                    </View>
-
+                            <IngredientSelect
+                                data={formattedIngredients}
+                                onChange={console.log}
+                                placeholder="Select ingredient"
+                            />
+                        </View>
+                    ))}
 
                     {/* Zubereitungsschritte */}
                     <View style={styles.topBarInput}>
-                      <Text style={styles.textH2}> Zubereitungsschritte </Text>
-                      <SmallButton plus={true} />
+                        <Text style={styles.textH2}> Zubereitungsschritte </ Text>
+                        <SmallButton plus={true} onPress={addStep} />
                     </View>
 
-                    <InputFieldSteps placeholder="Zubereitungsschritt beschreiben" />
+                    {steps.map((step, index) => (
+                        <InputFieldSteps key={index} stepNumber={step.stepNumber} placeholder="Zubereitungsschritt beschreiben" />
+                    ))}
                 </View>
 
             </ScrollView>
-
-
-
-
-            {/* Fixed Big Button */}
-            <View style={styles.fixedButtonContainer}>
-                <BigButton forward={true} />
-            </View>
         </View>
     );
 }
@@ -126,16 +156,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#FFFFFF',
+        paddingTop: 68,
+        backgroundColor: '#161616',
+        paddingHorizontal: 24,
     },
 
     scrollContainer: {
-        flex: 1,
         flexDirection: 'column',
         gap: 24,
         backgroundColor: '#161616',
-        padding: 24,
-        paddingTop: 68,
+        paddingTop: 24,
+        paddingBottom: 114,
     },
 
     topBar: {
@@ -149,14 +180,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
 
     inputContainer: {
-        flexDirection: 'column',
-        gap: 24,
         flexDirection: 'column',
         gap: 24,
     },
@@ -187,11 +212,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     },
-        color: '#66A182',
-        fontFamily: 'Montserrat',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
 
     textBody: {
         color: '#FFFFFF',
@@ -201,4 +221,3 @@ const styles = StyleSheet.create({
         lineHeight: 25,
     },
 });
-

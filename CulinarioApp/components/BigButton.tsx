@@ -5,11 +5,11 @@ interface BigButtonProps {
   cookingMode?: boolean;
   forward?: boolean;
   back?: boolean;
-  saveRecipe?: boolean;
+  saveIngredients?: boolean;
   addArticle?: boolean;
 }
 
-export default function BigButton({ cookingMode, forward, back, saveRecipe, addArticle }: BigButtonProps) {
+export default function BigButton({ cookingMode, forward, back, saveIngredients, addArticle }: BigButtonProps) {
   return (
     <>
       {cookingMode && (
@@ -22,6 +22,12 @@ export default function BigButton({ cookingMode, forward, back, saveRecipe, addA
       {forward && (
         <View style={[styles.button, { flex: 1 }]}>
           <Image source={require('../assets/icons/cook.png')} />
+        </View>
+      )}
+
+      {saveIngredients && (
+        <View style={[styles.button, { width: '100%' }]}>
+          <Text style={styles.textH2}> Zutaten speichern </Text>
         </View>
       )}
     </>

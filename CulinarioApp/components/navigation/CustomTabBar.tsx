@@ -6,17 +6,17 @@ import Svg, { Path } from "react-native-svg";
 import { ShoppingCart, House, Plus } from "lucide-react-native";
 
 const CustomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
-  // Prüft, ob der aktuelle Screen "Recipe" ist
+  // Prüft, ob der aktuelle Screen "Recipe" oder "CookingMod" ist
   const isRecipeOrCookingModScreen = useNavigationState((navState) => {
     if (!navState) return false; // Falls keine Navigation existiert, false zurückgeben
 
     const currentRoute = navState.routes[navState.index]; // Aktueller Tab
     const nestedRoute = currentRoute?.state?.routes?.[currentRoute.state.index]; // Aktueller Screen im Stack
 
-    return nestedRoute?.name === "Recipe" || nestedRoute?.name === "CookingMod";
+    return nestedRoute?.name === "Recipe" || nestedRoute?.name === "CookingMode";
   });
 
-  // Falls RecipeScreen aktiv ist, die CustomTabBar ausblenden
+  // Falls RecipeScreen oder CookingModeScreen aktiv ist, die CustomTabBar ausblenden
   if (isRecipeOrCookingModScreen) {
     return null;
   }

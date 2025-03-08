@@ -1,14 +1,11 @@
 import React from "react";
-import React from "react";
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { RecipeProvider } from "./context/RecipeContext";
+import { IngredientProvider } from "./context/IngredientContext";
 import { useFonts } from "expo-font";
-//import TabNavigator from "./components/navigation/TabNavigator";
 import TabNavigator from "./components/navigation/CombinedNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import "./global.css"
 
-import AddRecipeScreen from "./screens/AddRecipeScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -18,7 +15,6 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return null;
     return null;
   }
 
