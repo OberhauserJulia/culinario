@@ -30,7 +30,7 @@ export default function SmallButton({ settings, dots, back, plus, shoppingCart, 
   };
 
   return (
-    <TouchableOpacity onPress={handlePress} style={[styles.button, settings && styles.settingsButton, save && styles.saveButton]}>
+    <TouchableOpacity onPress={handlePress} style={[styles.button, settings && styles.settingsButton, save && styles.saveButton, plus && styles.plusButton]}>
         {settings && <Settings size={'100%'} color="white"/>}
         {dots && <EllipsisVertical size={'100%'} color="white"/>}
         {back && <ArrowLeft size={'100%'} color="white"/>}
@@ -63,5 +63,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#66A182',
     height: 49,
     width: 49,
+  },
+
+  plusButton: {
+    height: 40,
+    width: 40,
   },
 });

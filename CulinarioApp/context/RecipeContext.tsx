@@ -3,6 +3,16 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db, auth } from "../firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 
+export type RecipeType = {
+  id?: string;
+  name: string;
+  image: string | null;
+  ovensettings?: string;
+  source?: string;
+  ingredients: IngredientType[];
+  preparationSteps: PreparationStepType[];
+};
+
 export type IngredientType = {
   image: string | null;
   name: string;
@@ -14,16 +24,6 @@ export type PreparationStepType = {
   stepNumber: number;
   description: string;
   ingredients: IngredientType[];
-};
-
-export type RecipeType = {
-  id?: string;
-  name: string;
-  image: string | null;
-  note?: string;
-  source?: string;
-  ingredients: IngredientType[];
-  preparationSteps: PreparationStepType[];
 };
 
 type RecipeContextType = {

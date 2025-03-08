@@ -18,7 +18,6 @@ export default function InputFieldSteps({ stepNumber, placeholder, inputValue, o
     <View className="flex-row gap-6">
 
       <View className="bg-primary w-[40px] h-[40px] p-[6px] text-center font-robotoMedium items-center justify-center rounded-[5px]">
-        {/* Stepnumber */}
         <Text className="text-[16px] font-robotoMedium leading-[25px] text-white text-center">{stepNumber}</Text>
       </View>
 
